@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
-import { fetchPokemonList } from "./services/pokservice";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { fetchPokemonList } from "./services/PokeService";
+import PokeCard from "./components/PokeCard";
+import PokeDetails from "./pages/PokeDetails";
 import { Pokemon } from "./types/pokemon";
+import "./App.css";
 
 export default function App() {
-  // estado para almacenar la lista de Pokémon, el estado de carga y el estado de error
+  // Estado para almacenar la lista de Pokémon, el estado de carga y errores
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  //useEffect se ejecuta después de que el componente se monta
+  // useEffect para cargar la lista de Pokémon al montar el componente
   useEffect(() => {
     fetchPokemonList(20)
       .then((data) => setPokemon(data))
@@ -16,42 +20,55 @@ export default function App() {
       .finally(() => setLoading(false));
   }, []);
 
-  // si el estado de carga es true, mostramos un mensaje de carga
-  // o de error si el estado de error no es null,
-  // de lo contrario mostramos la lista de Pokémon
-  if (loading) return <p>Cargando...</p>;
-  if (error) return <p>Error: {error}</p>;
+  //respuesta de carga y manejo de errores
+  if (loading) {
+    return <p>Cargando...</p>;
+  }
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
+  // habilitar navegación a detalles de Pokémon
   return (
-    <div className="App">
-      <div className="container">
-        <div className="left">
-          <h1>POKEDEX volumen 1</h1>
-          <p>Ven y descubre los diferentes Pokemones del mundo Pokémon</p>
-        </div>
-        {/* // en la parte derecha mostramos la lista de Pokémon en una cuadrícula */}
-        <div className="pokemon-grid">
-          {pokemon.map((p) => (
-            <div key={p.id} className="pokemon-card">
-              <span className="pokemon-number">
-                #{String(p.id).padStart(3, "0")}
-              </span>
-              {/* // mostramos la imagen del Pokémon, su nombre y sus tipos */}
-              <img src={p.sprites.front_default} alt={p.name} width={80} />
-              <p className="pokemon-name">{p.name}</p>
-              <div className="type-badges">
-                {p.types.map((t) => (
-                  // cada tipo se muestra como una etiqueta con el nombre del tipo */}
+    <BrowserRouter>
+      <Routes>
+        {/* muestra el listado de Pokémon */}
+        <Route
+          path="/"
+          element={
+            <div className="App">
+              <header className="header">
+                <strong>Aplicaciones Web</strong>
+              </header>
 
-                  <span key={t.type.name} className="type-badge">
-                    {t.type.name}
-                  </span>
+              <div className="container">
+                <h1>POKEDEX volumen 1</h1>
+                <p>Ven y descubre los diferentes Pokemones del mundo Pokémon</p>
+              </div>
+
+              {/* grid de tarjetas de Pokémon */}
+              <div className="pokemon-grid">
+                {pokemon.map((p) => (
+                  // cada tarjeta muestra el nombre, imagen y tipos del Pokémon
+                  <PokeCard
+                    key={p.id}
+                    id={p.id}
+                    name={p.name} // nombre del Pokémon
+                    image={p.sprites.front_default} // imagen del Pokémon
+                    types={p.types.map((t) => t.type.name)} //nombre del tipo de Pokémon
+                  />
                 ))}
               </div>
+
+              <footer className="footer">
+                <span>ISyTE G-961. Lira. 2026</span>
+              </footer>
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
+          }
+        />
+        {/* ruta para mostrar detalles de un Pokémon específico */}
+        <Route path="/pokemon/:id" element={<PokeDetails />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

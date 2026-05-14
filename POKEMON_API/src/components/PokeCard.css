@@ -1,0 +1,123 @@
+/* tarjeta individual */
+.poke-card {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  width: 150px;
+  box-shadow:
+    #511e68 0px 1px 3px,
+    #511e68 0px 1px 2px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+/* al pasar el mouse por encima muestra sombra */
+.poke-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    #511e68 0px 4px 8px,
+    #511e68 0px 2px 4px;
+}
+/* imagen de la tarjeta, con definición de tamaño */
+.poke-card img {
+  width: 96px;
+  height: 96px;
+}
+
+/* título de la tarjeta */
+.poke-card h2 {
+  font-size: 0.95rem;
+  text-transform: capitalize;
+  margin: 0.4rem 0;
+  color: #2d2d2d;
+}
+
+/* número del pokémon */
+.poke-number {
+  font-size: 0.75rem;
+  color: #888;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* badges de tipo, es la forma en que se muestran los tipos de pokemones */
+.type-badges {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.type-badge {
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 20px;
+  text-transform: capitalize;
+  color: white;
+}
+
+/* colores de los tipos de pokemones */
+.type-fire {
+  background: #f08030;
+}
+.type-water {
+  background: #6890f0;
+}
+.type-grass {
+  background: #78c850;
+}
+.type-electric {
+  background: #f8d030;
+  color: #333;
+}
+.type-ice {
+  background: #98d8d8;
+  color: #333;
+}
+.type-fighting {
+  background: #c03028;
+}
+.type-poison {
+  background: #a040a0;
+}
+.type-ground {
+  background: #e0c068;
+  color: #333;
+}
+.type-flying {
+  background: #a890f0;
+}
+.type-psychic {
+  background: #f85888;
+}
+.type-bug {
+  background: #a8b820;
+}
+.type-rock {
+  background: #b8a038;
+}
+.type-ghost {
+  background: #705898;
+}
+.type-dragon {
+  background: #7038f8;
+}
+.type-dark {
+  background: #705848;
+}
+.type-steel {
+  background: #b8b8d0;
+  color: #333;
+}
+.type-fairy {
+  background: #ee99ac;
+  color: #333;
+}
+.type-normal {
+  background: #a8a878;
+}
